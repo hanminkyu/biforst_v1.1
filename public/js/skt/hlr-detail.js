@@ -1,11 +1,11 @@
 function getDateTime(){
     var date = new Date();
-	let day = ("0" + date.getDate()).slice(-2);
-	let month = ("0" + (date.getMonth() + 1)).slice(-2);
+	let day = (date.getDate()<10? '0' : '')+date.getDate();
+	let month = ((date.getMonth()+ 1)<10? '0':'')+(date.getMonth()+1);
 	let year = date.getFullYear();
-	let hours = date.getHours();
-	let minutes = date.getMinutes();
-	let seconds = date.getSeconds();
+	let hours = (date.getHours()<10? '0' : '')+date.getHours();
+	let minutes = (date.getMinutes()<10? '0' : '')+date.getMinutes();
+	let seconds = (date.getSeconds()<10? '0' : '')+date.getSeconds();
 	
 	return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds);
 }
@@ -14,16 +14,18 @@ function getPrevDateTime(){
 	let PrevTime = new Date();
 	PrevTime.setMinutes(PrevTime.getMinutes()-5);
 	
-	let date = ("0" + PrevTime.getDate()).slice(-2);
-	let month = ("0" + (PrevTime.getMonth() + 1)).slice(-2);
+	let day = (PrevTime.getDate()<10? '0' : '')+PrevTime.getDate();
+	let month = ((PrevTime.getMonth()+ 1)<10? '0':'')+(PrevTime.getMonth()+1);
 	let year = PrevTime.getFullYear();
-	let hours = PrevTime.getHours();
-	let minutes = PrevTime.getMinutes();
-	let seconds = PrevTime.getSeconds();
+	let hours = (PrevTime.getHours()<10? '0' : '')+PrevTime.getHours();
+	let minutes = (PrevTime.getMinutes()<10? '0' : '')+PrevTime.getMinutes();
+	let seconds = (PrevTime.getSeconds()<10? '0' : '')+PrevTime.getSeconds();
 	
-	return (year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+	return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds);
 }
 
+var sound_status = 1; //Sound ON
+var audio = "<audio autoplay loop class=\"audio\" src='/alert_sound.mp3'></audio>";
 
 function executeSetInterval(func, delay){
   func();

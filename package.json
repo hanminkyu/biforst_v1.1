@@ -16,5 +16,18 @@
     "jade": "^1.11.0",
     "morgan": "~1.9.1",
     "mysql": "^2.18.1"
-  }
+  },
+  "description": "Created with [Nodeclipse](https://github.com/Nodeclipse/nodeclipse-1)\r  ([Eclipse Marketplace](http://marketplace.eclipse.org/content/nodeclipse), [site](http://www.nodeclipse.org))",
+  "main": "app.js",
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LeeSungje/bifrost_v1.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LeeSungje/bifrost_v1/issues"
+  },
+  "homepage": "https://github.com/LeeSungje/bifrost_v1#readme"
 }

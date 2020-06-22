@@ -2,9 +2,9 @@ module.exports = (function () {
     return {
         local: {
             host: 'localhost',
-            port: '3306',
+            port: '3333',
             user: 'root',
-            password: 'root',
+            password: 'dnsndata12',
             database: 'bifrost'
         },
         real: {
