@@ -430,6 +430,8 @@ function ajaxUpdateAlarm(url){
       	 $("#AUC").addClass("alarm-twinkle");
        }if((system_name.toString()).match("UCMS*")){
       	 $("#UCMS").addClass("alarm-twinkle");
+       }if((system_name.toString()).match("MECGW*")){
+        	 $("#MECGW").addClass("alarm-twinkle");
        }
     });
     	
@@ -468,7 +470,7 @@ function drawPieChart(data1, data2, elementId){
               },
               title: {
                 display: true,
-                text: data1/data2*100+"%"
+                text: (data1/data2*100).toFixed(1)+"%"
               }
             }
     }
@@ -518,6 +520,17 @@ function ajaxUpdate5Gsystem(url){
     var curUCMSTps = json.result[5].curUCMSTps;
     var totUCMSTps = json.result[5].totUCMSTps;
     
+    //fallback(6) MSS 정보
+    var curMSSCnt = json.result[6].curMSSCnt;
+    var totMSSCnt = json.result[6].totMSSCnt;
+    var curMSSSess = json.result[6].curMSSSess;
+    var totMSSSess = json.result[6].totMSSSess;
+    
+    //fallback(7) MECGW 정보
+    var curMECGWCnt = json.result[7].curMECGWCnt;
+    var totMECGWCnt = json.result[7].totMECGWCnt;
+    var curMECGWSess = json.result[7].curMECGWSess;
+    var totMECGWSess = json.result[7].totMECGWSess;
     
     drawPieChart(curPGWCnt, totPGWCnt, "doughnut-chart"); //pgw
     drawPieChart(curTASCnt, totTASCnt, "doughnut-chart-tas"); 
@@ -525,8 +538,8 @@ function ajaxUpdate5Gsystem(url){
     drawPieChart(curHLRCnt, totHLRCnt, "doughnut-chart-hlr");
     drawPieChart(curAuCCnt, totAuCCnt, "doughnut-chart-auc");
     drawPieChart(curUCMSCnt, totUCMSCnt, "doughnut-chart-ucms");
-    
-    console.log(json.result[1]);
+    drawPieChart(curMSSCnt, totMSSCnt, "doughnut-chart-mss");
+    drawPieChart(curMECGWCnt, totMECGWCnt, "doughnut-chart-mecgw");
     
     //TEST용 PIE Chart 삽입
     for (var i=1; i<=11; i++){
@@ -600,6 +613,28 @@ function ajaxUpdate5Gsystem(url){
         $("#totUCMSCntContainer").append(totUCMSCntAddHtml);
         $("#curUCMSTpsContainer").append(curTpsAddHtml);
         $("#totUCMSTpsContainer").append(totTpsAddHtml);
+      });
+    
+    totMSSCnt.forEach(function(e,index){
+        var curMSSCntAddHtml = "<span class='sys-txt-value'>"+curMSSCnt[index]+"</span>"; 
+        var totMSSCntAddHtml = "<span class='sys-txt-value'>"+totMSSCnt[index]+"</span>";
+        var curSessAddHtml = "<span class='sys-txt-value'>"+curMSSSess[index]+"</span>";
+        var totSessAddHtml = "<span class='sys-txt-value'>"+totMSSSess[index]+"</span>";
+        $("#curMSSCntContainer").append(curMSSCntAddHtml);
+        $("#totMSSCntContainer").append(totMSSCntAddHtml);
+        $("#curMSSSessContainer").append(curSessAddHtml);
+        $("#totMSSSessContainer").append(totSessAddHtml);
+      });
+    
+    totMECGWCnt.forEach(function(e,index){
+        var curMECGWCntAddHtml = "<span class='sys-txt-value'>"+curMECGWCnt[index]+"</span>"; 
+        var totMECGWCntAddHtml = "<span class='sys-txt-value'>"+totMECGWCnt[index]+"</span>";
+        var curSessAddHtml = "<span class='sys-txt-value'>"+curMECGWSess[index]+"</span>";
+        var totSessAddHtml = "<span class='sys-txt-value'>"+totMECGWSess[index]+"</span>";
+        $("#curMECGWCntContainer").append(curMECGWCntAddHtml);
+        $("#totMECGWCntContainer").append(totMECGWCntAddHtml);
+        $("#curMECGWSessContainer").append(curSessAddHtml);
+        $("#totMECGWSessContainer").append(totSessAddHtml);
       });
   });
 }
@@ -835,11 +870,10 @@ function executeSetInterval(func, delay){
 
   /** periodic AJAX module lists -MK- */
   executeSetInterval(function(){
-    ajaxUpdateCenterStatus("/api/v1/map");
-    ajaxUpdateAlarm("/api/v1/alarms?");
-    ajaxUpdate5Gsystem("/api/v1/5Gsystem?");
-    ajaxInsertStatToAlarm("/api/v1/stats");
-    
+	  ajaxUpdateAlarm("/api/v1/alarms?");
+	  ajaxInsertStatToAlarm("/api/v1/stats");
+	  ajaxUpdate5Gsystem("/api/v1/5Gsystem?");
+	  ajaxUpdateCenterStatus("/api/v1/map");
   }, _PERIOD_);
 
   /** periodic twinkle functions -JJ- */

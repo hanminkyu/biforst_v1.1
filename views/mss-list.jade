@@ -1,0 +1,71 @@
+extends layout
+
+block content
+   input(type="hidden", val="mss")#inputCurrentSystem
+   .mssList-container
+     .col-sm-3.skt-panel.mss-panel#azone
+       .col-sm-12.border-system-detail
+         .sys-detail-ttl A Zone
+         span#curAcnt
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totAcnt
+         span.sys-txt-delimiter 식
+         br
+         span#curASess
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totASess
+         span.sys-txt-delimiter 만
+         br
+         span#curATps
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totATps
+         span.sys-txt-delimiter TPS
+         br
+
+            
+     .col-sm-3.skt-panel.mss-panel#bzone
+       .col-sm-12.border-system-detail
+         .sys-detail-ttl B Zone
+         span#curBcnt
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBcnt
+         span.sys-txt-delimiter 식
+         br 
+         span#curBSess
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBSess
+         span.sys-txt-delimiter 만
+         br
+         span#curBTps
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBTps
+         span.sys-txt-delimiter TPS
+         br 
+         
+     .col-sm-3.skt-panel.mss-panel#bkzone
+       .col-sm-12.border-system-detail
+         .sys-detail-ttl BK Zone
+         span#curBKcnt
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBKcnt
+         span.sys-txt-delimiter 식
+         br
+         span#curBKSess
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBKSess
+         span.sys-txt-delimiter 만
+         br
+         span#curBKTps
+         span.sys-txt-delimiter &nbsp/&nbsp
+         span#totBKTps
+         span.sys-txt-delimiter TPS
+         br  
+
+  
+block javascripts
+  script(src="/js/flot/jquery.flot.time.js")
+  script(src="/js/twinkle/jquery.twinkle-0.9.0.min.js")
+  script(src="/js/skt/mss-list.js")
+
+       
+    

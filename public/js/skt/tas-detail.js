@@ -77,7 +77,7 @@ function drawPieChart(data1, data2, elementId){
                 {
                   //label: "Population (millions)",
                   backgroundColor: ["#3cba9f","#c45850"],
-                  data: [data2-data1, data2]
+                  data: [data2-data1, data1]
                 }
               ]
             },

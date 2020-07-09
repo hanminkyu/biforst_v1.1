@@ -979,7 +979,7 @@ block content
               l0.517,4.106l-1.718,4.191l-3.75,3.875l-3.875,0.125L191.876,343.855z')
         
         .col-lg-7.col-md-12.col-sm-12.col-xs-12.skt-panel#skt-map-cont-2
-          .col-xs-12.align-middle
+          .col-xs-12.sysGroup_table.align-middle
             .col-xs-1#5G_title 
               .skt-sysgrp-ttl-eng 5G
             .col-xs-11#5G_sysgrp
@@ -1011,20 +1011,20 @@ block content
                   span.sys-txt-delimiter 만
                 .col-xs-6#5G_AMF_pie
                   canvas#doughnut-chart1.sysPIE-chart      
-              .col-xs-4#5G_SMF.sys-container
-                .col-xs-6#5G_SMF_stat
-                  .skt-sys-ttl MEC
-                  span#curSMFCntContainer 21
+              .col-xs-4#MECGW.sys-container.a(onclick='location.href="/mecgw-list"') 
+                .col-xs-6#mecgw_stat
+                  .skt-sys-ttl MECGW
+                  span#curMECGWCntContainer
                   span.sys-txt-delimiter &nbsp/&nbsp
-                  span#totSMFCntContainer 21
+                  span#totMECGWCntContainer
                   span.sys-txt-delimiter 식
                   p.sys-txt-delimiter 
-                  span#curSMFSesContainer 487
+                  span#curMECGWSessContainer
                   span.sys-txt-delimiter &nbsp/&nbsp
-                  span#totSMFSesContainer 500
+                  span#totMECGWSessContainer
                   span.sys-txt-delimiter 만
-                .col-xs-6#5G_SMF_pie
-                  canvas#doughnut-chart2.sysPIE-chart  
+                .col-xs-6#MECGW_pie
+                  canvas#doughnut-chart-mecgw.sysPIE-chart  
                   
           .col-xs-12.sysGroup_table.align-middle
             .col-xs-1#LTE_title 
@@ -1078,17 +1078,17 @@ block content
             .col-xs-1#IMS_title 
               .skt-sysgrp-ttl-eng IMS
             .col-xs-11#IMS_sysgrp
-              .col-xs-4#IMS_MSS.sys-container 
+              .col-xs-4#MSS.sys-container.a(onclick='location.href="/mss-list"') 
                 .col-xs-6#IMS_MSS_stat
                   .skt-sys-ttl MSS
-                  span#curMSSCntContainer 10
+                  span#curMSSCntContainer
                   span.sys-txt-delimiter &nbsp/&nbsp
-                  span#totMSSCntContainer 10
+                  span#totMSSCntContainer
                   span.sys-txt-delimiter 식
                   p.sys-txt-delimiter 
-                  span#curMSSSesContainer 785
+                  span#curMSSSessContainer
                   span.sys-txt-delimiter &nbsp/&nbsp
-                  span#totMSSSesContainer 800
+                  span#totMSSSessContainer
                   span.sys-txt-delimiter 만
                 .col-xs-6#IMS_MSS_pie
                   canvas#doughnut-chart6.sysPIE-chart         
@@ -1139,7 +1139,7 @@ block content
                   span.sys-txt-delimiter
                 .col-xs-6#ATHN_HLR_pie
                   canvas#doughnut-chart-hlr.sysPIE-chart         
-              .col-xs-4#AUC.sys-container.a(onclick='location.href="/auc-list"')
+              .col-xs-4#AuC.sys-container.a(onclick='location.href="/auc-list"')
                 .col-xs-6#ATHN_AuC_stat.sysgroup-click
                   .skt-sys-ttl AUC
                   span#curAuCCntContainer 
@@ -1168,13 +1168,11 @@ block content
                 .col-xs-6#ATHN_UCMS_pie
                   canvas#doughnut-chart-ucms.sysPIE-chart      
                   
-                  
-                  
   .skt-map-alarm-area
     .container
       .row
         .col-lg-1.col-md-1.col-sm-1.col-xs-1
-          p.alarm-head Alarm 현황
+          p.alarm-head
         #alarm-panel.col-lg-11.col-md-11.col-sm-11.col-xs-11.alarm-table-panel
           #alarm-table
             .col-lg-2.col-md-4.col-sm-6.col-xs-12#alarmEventTimeContainer

@@ -239,7 +239,7 @@ function ajaxShowPgwDetail(url){
     "<div id=\"A6852\" class=\"col-sm-10 pgw-stat-panel\">" + 
     "<div class=\"pgw-stat-txt\">FP PACKET BUFFER CRITICAL ALARM</div></div>";
 	
-	var a_format_vPGW= "<div class=\"col-sm-10 pgw-stat-panel\">"+
+	var a_format_vPGW= "<div id=\"A4111\" class=\"col-sm-10 pgw-stat-panel\">"+
     "<div class=\"pgw-stat-txt\">Active Function Failed</div></div>";
 	
 	$(".pgw-container").find(".col-sm-10").remove();
@@ -248,7 +248,6 @@ function ajaxShowPgwDetail(url){
 	
 	system_namef1.forEach(function(e,index) {
 		if(system_namef1[index] == sys_num ){
-			console.log(getDateTime(),date[index]+" "+time[index]);
 			if( getPrevDateTime() < date[index]+" "+time[index] && getDateTime() > date[index]+" "+time[index]){
 				if(system_typef1[index] == "D"){
 						switch(type[index]){
@@ -362,7 +361,7 @@ function ajaxShowPgwDetail(url){
 						$("#A6852").addClass("alarm-twinkle");
 						break;
 					case "A4111":
-						$("#A6852").removeClass("alarm-twinkle");
+						$("#A4111").addClass("alarm-twinkle");
 						break;
 					
 				}
@@ -387,7 +386,7 @@ function ajaxShowPgwDetail(url){
 						$("#A6852").removeClass("alarm-twinkle");
 						break;
 					case "A4111":
-						$("#A6852").removeClass("alarm-twinkle");
+						$("#A4111").removeClass("alarm-twinkle");
 						break;
 					}
 				}

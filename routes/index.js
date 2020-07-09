@@ -45,6 +45,19 @@ router.get('/tas-rm', function(req, res, next){
 	  
 });
 
+router.get('/mecgw-list', function(req, res, next){
+	  res.render('mecgw-list');
+});
+
+router.get('/mecgw-list/:system', function(req, res, next){
+	  res.render('mecgw-detail', { system: req.params.system});
+	  
+});
+
+router.get('/mecgw-rm', function(req, res, next){
+	  res.render('mecgw-rm');
+	  
+});
 /* -----------------------------------sj 2020.04.20 start----------------------------------- */
 router.get('/hss-list', function(req, res, next){
 	  res.render('hss-list');
