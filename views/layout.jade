@@ -76,10 +76,7 @@ html.no-js(lang='ko')
               .logo-area
                 a(href='/')
                   img(src='/img/logo/logo.png', alt='')
-                span#currentTimeSpan(style='margin-right: 30px')
-                a
-                  img#speaker(src='/speaker2.png', onclick='changeStatus()')
-                
+                span#currentTimeSpan(style='margin-right: 30px')   
             .col-lg-4.col-md-4.col-sm-12.col-xs-12
               .header-top-menu.align-middle
                 button.btn.waves-effect.mode-slt-btn#modeSimulation(data-toggle="modal", data-target="#sktSimulModal") RM Simulation
@@ -133,8 +130,11 @@ html.no-js(lang='ko')
                   span
                     i.fa.fa-caret-down
                 ul#dropdown-centers.dropdown-menu.triger-fadeIn-dp
+            .col-lg-1.col-md-2.col-sm-8.col-xs-4
+              a(float='right')
+                  img#speaker.align-middle(src='/speaker2.png', onclick='changeStatus()', width='50px', style='margin-top:5px') 
             .col-lg-2.col-md-2.col-sm-8.col-xs-4
-              .header-top-menu.align-middle
+              .header-top-menu
                 button.btn.waves-effect.data-rcv-info-btn.data-rcv-info-ttl 미수집 : 
                 button#data-rcv-info.btn.waves-effect.data-rcv-info-btn.btn-status(data-toggle="modal", data-target="#sktCollectionModal")
                 //-  
@@ -155,24 +155,27 @@ html.no-js(lang='ko')
                         p.modal-sub-title
                         .row
                           .skt-smr-modal-tbl
-                            .col-lg-1.col-md-2.col-sm-4.col-xs-4.skt-modal-name-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd 사옥명
+                            .col-lg-2.col-md-4.col-sm-8.col-xs-10.skt-modal-system-container
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle 시스템명
+                            .col-lg-1.col-md-2.col-sm-4.col-xs-10.skt-modal-type-container
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle 시스템 타입
+                            .col-lg-1.col-md-2.col-sm-4.col-xs-10.skt-modal-location-container
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle 사옥
+                            .col-lg-1.col-md-2.col-sm-4.col-xs-4.skt-modal-building-container
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle 층수
                             .col-lg-1.col-md-2.col-sm-4.col-xs-4.skt-modal-floor-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd 층수
-                            .col-lg-1.col-md-2.col-sm-2.col-xs-4.skt-modal-location-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd 장비실
-                            .col-lg-3.col-md-6.col-sm-10.col-xs-10.skt-modal-server-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd 서버명
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle 상면
                             .col-lg-4.col-md-8.col-sm-12.col-xs-12.skt-modal-last-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd Last Update
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle Last Update
                             .col-lg-2.col-md-2.col-sm-4.col-xs-4.skt-modal-mask-container
-                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd Mask
+                              p.skt-smr-modal-txt.skt-smr-modal-tbl-hd.align-middle Mask
                             //.col-lg-3.col-md-8.col-sm-12.col-xs-12.skt-modal-last-container
                               p.skt-smr-modal-txt.skt-smr-modal-tbl-hd Last Update
                             //.col-lg-1.col-md-2.col-sm-4.col-xs-4.skt-modal-mask-container
                               p.skt-smr-modal-txt.skt-smr-modal-tbl-hd Mask
                             //.col-lg-2.col-md-6.col-sm-8.col-xs-8.skt-modal-button-container
                               p.skt-smr-modal-txt.skt-smr-modal-tbl-hd 클릭하여 상세보기
+                              
                               
 
 

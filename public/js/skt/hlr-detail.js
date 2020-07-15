@@ -52,7 +52,7 @@ function drawPieChart(data1, data2, elementId){
               },
               title: {
                 display: true,
-                text: (100-(data1/data2*100)).toFixed(2)+"%"
+                text: (data1/data2*100).toFixed(2)+"%"
               }
             }
     }

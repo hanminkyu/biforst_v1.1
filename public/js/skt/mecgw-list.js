@@ -3,6 +3,43 @@ function executeSetInterval(func, delay){
   setInterval(func,delay);
 }
 
+var sound_status = 1; //Sound ON
+var audio = "<audio autoplay loop class=\"audio\" src='/alert_sound.mp3'></audio>";
+
+function changeStatus(){
+	
+	if(sound_status == 1){ //Sound ON이면
+		sound_status = 0; //OFF으로
+		document.getElementById('speaker').src='/mute.png'; //mute 이미지로 바꾸기
+		
+		$(".mecgwList-container").find(".audio").remove(); //알람 소리 제거
+	}
+	
+	else{ //Sound OFF면
+		sound_status = 1; //ON으로
+		document.getElementById('speaker').src='/speaker2.png';
+		
+		if(document.getElementsByClassName("alarm-twinkle").length > 0) 
+		{
+			$(".mecgwList-container").append(audio);
+		}
+	}
+	
+}
+
+
+function play_audio(){
+	
+	if(document.getElementsByClassName("alarm-twinkle").length > 0 && sound_status==1) 
+	{
+		$(".mecgwList-container").append(audio);
+	}
+} 
+
+function pause_audio(){
+	$(".mecgwList-container").find(".audio").remove();
+}
+
 function ajaxShowSystemDetail(url){
 	  $.ajax({
 	    url: url,
@@ -42,6 +79,8 @@ function ajaxShowSystemDetail(url){
 	    $(".mecgwList-container").find(".sys-detail-value").remove();   
 	    $(".mecgwList-container").find(".col-sm-6").remove();
 	    $(".mecgw-detail-box").removeClass("alarm-twinkle");
+
+		pause_audio();
 	    
 	    //fallback(0) 지역별 시스템 출력
 	    system_type.forEach(function(e,index){
@@ -154,7 +193,10 @@ function ajaxShowSystemDetail(url){
 	        }
 	        //$("#skt-map-center-"+site).find(".skt-map-status-btn").text(statusText);
 	      }
-	  })
+		
+		play_audio();
+		
+	  });
 }
 	  
 

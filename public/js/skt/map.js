@@ -49,6 +49,18 @@ function changeStatus(){
 	console.log(sound_status);
 }
 
+function play_audio(){
+	
+	if(document.getElementsByClassName("alarm-twinkle").length > 0 && sound_status==1) 
+	{
+		$("#skt-map-cont-2").append(audio);
+	}
+} 
+
+function pause_audio(){
+	$("#skt-map-cont-2").find(".audio").remove();
+}
+
 /** draw variable is used to plot charts -JJ- */
 var draw = {
   dunsan: {
@@ -397,7 +409,7 @@ function ajaxUpdateAlarm(url){
     $(".skt-map-center").removeClass("cri-alert-on maj-alert-on min-alert-on skt-map-status-cri skt-map-status-maj skt-map-status-min");
     $(".sys-container").removeClass("alarm-twinkle");
 
-	$("#skt-map-cont-2").find(".audio").remove(); //sj
+	pause_audio();
 	
     
     eventTime.forEach(function(e,index){
@@ -442,10 +454,7 @@ function ajaxUpdateAlarm(url){
 	$("#skt-map-center-"+site).find(".skt-map-status-btn").text(statusText);
 	
 	//sj
-	if(document.getElementsByClassName("alarm-twinkle").length > 0 && sound_status==1) 
-	{
-		$("#skt-map-cont-2").append(audio);
-	}
+	play_audio();
 	
   });
 }

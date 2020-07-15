@@ -24,6 +24,9 @@ function getPrevDateTime(){
 	return (year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds);
 }
 
+var sound_status = 1; //Sound ON
+var audio = "<audio autoplay loop class=\"audio\" src='/alert_sound.mp3'></audio>";
+
 function executeSetInterval(func, delay){
   func();
   setInterval(func,delay);
@@ -54,6 +57,40 @@ function drawPieChart(data1, data2, elementId){
             }
     }
 	new Chart($("."+elementId), config);
+}
+
+function changeStatus(){
+	
+	if(sound_status == 1){ //Sound ON이면
+		sound_status = 0; //OFF으로
+		document.getElementById('speaker').src='/mute.png'; //mute 이미지로 바꾸기
+		
+		$(".ims-container").find(".audio").remove(); //알람 소리 제거
+	}
+	
+	else{ //Sound OFF면
+		sound_status = 1; //ON으로
+		document.getElementById('speaker').src='/speaker2.png';
+		
+		if(document.getElementsByClassName("alarm-twinkle").length > 0) 
+		{
+			$(".ims-container").append(audio);
+		}
+	}
+	
+}
+
+
+function play_audio(){
+	
+	if(document.getElementsByClassName("alarm-twinkle").length > 0 && sound_status==1) 
+	{
+		$(".ims-container").append(audio);
+	}
+} 
+
+function pause_audio(){
+	$(".ims-container").find(".audio").remove();
 }
 
 function ajaxShowMECGWDetail(url){
@@ -132,6 +169,8 @@ function ajaxShowMECGWDetail(url){
 	    
 		$(".ims-container").find(".sys-txt-value").remove(); 
 		$(".ims-stat-panel").removeClass("alarm-twinkle");
+		
+		pause_audio();
 
 		//fallback(0)
 		system_namef0.forEach(function(e,index) {
@@ -236,6 +275,9 @@ function ajaxShowMECGWDetail(url){
 				}
 			}
 		});
+		
+		play_audio();
+		
 	  });
 }
 

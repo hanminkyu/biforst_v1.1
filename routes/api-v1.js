@@ -51,6 +51,29 @@ function getPrevTime(){
 	return (hours + ":" + minutes + ":" + seconds);
 }
 
+function getPrev10mDate(){
+	let PrevTime = new Date();
+	PrevTime.setMinutes(PrevTime.getMinutes()-10);
+	
+	let day = (PrevTime.getDate()<10? '0' : '')+PrevTime.getDate();
+	let month = ((PrevTime.getMonth()+ 1)<10? '0':'')+(PrevTime.getMonth()+1);
+	let year = PrevTime.getFullYear();
+	
+	return (year + "-" + month + "-" + day);
+}
+
+
+function getPrev10mTime(){
+	let PrevTime = new Date();
+	PrevTime.setMinutes(PrevTime.getMinutes()-10);
+	
+	let hours = (PrevTime.getHours()<10? '0' : '')+PrevTime.getHours();
+	let minutes = (PrevTime.getMinutes()<10? '0' : '')+PrevTime.getMinutes();
+	let seconds = (PrevTime.getSeconds()<10? '0' : '')+PrevTime.getSeconds();
+	
+	return (hours + ":" + minutes + ":" + seconds);
+}
+
 function getQueryInUppercase(query) {
   return "'" + String(query).toUpperCase() + "'";
 }
@@ -176,6 +199,284 @@ router.get('/v1/alarms', function(req, res, next) {
 	    };
 	    res.send(JSON.stringify(result));
 	  });
+});
+
+//미수집 장비 조회
+router.get('/v1/Uncollected', function(req, res, next) {
+	var result;
+    var result_code = 1;
+    var result_msg = "success";
+    
+    async.parallel([
+		//fallback(0) PGW
+		function(callback){
+			  var system_name_PGW = [];
+			  var system_type_PGW = [];
+			  var location_PGW = [];
+			  var building_PGW = [];
+			  var floor_PGW = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%PGW%\' and system_name not in (select distinct system_name from pgw_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_PGW.push(e.system_name);
+			      			system_type_PGW.push(e.system_type);
+			      			location_PGW.push(e.location);
+			      			building_PGW.push(e.building);
+							floor_PGW.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_PGW : system_name_PGW,	
+			      				system_type_PGW: system_type_PGW,
+			      				location_PGW : location_PGW,
+			      				building_PGW: building_PGW,
+								floor_PGW: floor_PGW
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+		  //fallback(1) TAS
+		  function(callback){
+			  var system_name_TAS = [];
+			  var system_type_TAS = [];
+			  var location_TAS = [];
+			  var building_TAS = [];
+			  var floor_TAS = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%TAS%\' and system_name not in (select distinct system_name from tas_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_TAS.push(e.system_name);
+			      			system_type_TAS.push(e.system_type);
+			      			location_TAS.push(e.location);
+			      			building_TAS.push(e.building);
+							floor_TAS.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_TAS : system_name_TAS,	
+			      				system_type_TAS: system_type_TAS,
+			      				location_TAS : location_TAS,
+			      				building_TAS: building_TAS,
+								floor_TAS: floor_TAS
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+		//fallback(2), HSS 정보 전송
+		  function(callback){
+			  var system_name_HSS = [];
+			  var system_type_HSS = [];
+			  var location_HSS = [];
+			  var building_HSS = [];
+			  var floor_HSS = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%HSS%\' and system_name not in (select distinct system_name from hss_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_HSS.push(e.system_name);
+			      			system_type_HSS.push(e.system_type);
+			      			location_HSS.push(e.location);
+			      			building_HSS.push(e.building);
+							floor_HSS.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_HSS : system_name_HSS,	
+			      				system_type_HSS: system_type_HSS,
+			      				location_HSS : location_HSS,
+			      				building_HSS: building_HSS,
+								floor_HSS: floor_HSS
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+		//fallback(3), HLR 정보 전송
+		  function(callback){
+			  var system_name_HLR = [];
+			  var system_type_HLR = [];
+			  var location_HLR = [];
+			  var building_HLR = [];
+			  var floor_HLR = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%HLR%\' and system_name not in (select distinct system_name from hlr_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_HLR.push(e.system_name);
+			      			system_type_HLR.push(e.system_type);
+			      			location_HLR.push(e.location);
+			      			building_HLR.push(e.building);
+							floor_HLR.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_HLR : system_name_HLR,	
+			      				system_type_HLR: system_type_HLR,
+			      				location_HLR : location_HLR,
+			      				building_HLR: building_HLR,
+								floor_HLR: floor_HLR
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+		//fallback(4), AuC 정보 전송
+		  function(callback){
+			  var system_name_AUC = [];
+			  var system_type_AUC = [];
+			  var location_AUC = [];
+			  var building_AUC = [];
+			  var floor_AUC = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%AUC%\' and system_name not in (select distinct system_name from auc_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_AUC.push(e.system_name);
+			      			system_type_AUC.push(e.system_type);
+			      			location_AUC.push(e.location);
+			      			building_AUC.push(e.building);
+							floor_AUC.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_AUC : system_name_AUC,	
+			      				system_type_AUC: system_type_AUC,
+			      				location_AUC : location_AUC,
+			      				building_AUC: building_AUC,
+								floor_AUC: floor_AUC
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+
+		//fallback(5), MME 정보 전송
+		  function(callback){
+			  var system_name_MME = [];
+			  var system_type_MME = [];
+			  var location_MME = [];
+			  var building_MME = [];
+			  var floor_MME = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%MME%\' and system_name not in (select distinct system_name from mme_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_MME.push(e.system_name);
+			      			system_type_MME.push(e.system_type);
+			      			location_MME.push(e.location);
+			      			building_MME.push(e.building);
+							floor_MME.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_MME : system_name_MME,	
+			      				system_type_MME: system_type_MME,
+			      				location_MME : location_MME,
+			      				building_MME: building_MME,
+								floor_MME: floor_MME
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+
+		//fallback(6), SGW 정보 전송
+		  function(callback){
+			  var system_name_SGW = [];
+			  var system_type_SGW = [];
+			  var location_SGW = [];
+			  var building_SGW = [];
+			  var floor_SGW = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%SGW%\' and system_name not in (select distinct system_name from sgw_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_SGW.push(e.system_name);
+			      			system_type_SGW.push(e.system_type);
+			      			location_SGW.push(e.location);
+			      			building_SGW.push(e.building);
+							floor_SGW.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_SGW : system_name_SGW,	
+			      				system_type_SGW: system_type_SGW,
+			      				location_SGW : location_SGW,
+			      				building_SGW: building_SGW,
+								floor_SGW: floor_SGW
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  },
+
+		//fallback(7), UCMS 정보 전송
+		  function(callback){
+			  var system_name_UCMS = [];
+			  var system_type_UCMS = [];
+			  var location_UCMS = [];
+			  var building_UCMS = [];
+			  var floor_UCMS = [];
+				
+				
+			  mysqlDB.query('select system_name, system_type, location, building, floor_plan from system_info_total where system_name like \'%UCMS%\' and system_name not in (select distinct system_name from ucms_stat_list where date >= \''+ getPrev10mDate() + '\' and time >= \''+ getPrev10mTime() + '\' )',
+				  function(error, results, fields) {
+				  	if (error) {
+			      		console.log(error);
+			      	} else {
+			      		results.forEach(function(e) {
+			      			system_name_UCMS.push(e.system_name);
+			      			system_type_UCMS.push(e.system_type);
+			      			location_UCMS.push(e.location);
+			      			building_UCMS.push(e.building);
+							floor_UCMS.push(e.floor_plan);
+			      		});
+			      		var json = {
+			      				system_name_UCMS : system_name_UCMS,	
+			      				system_type_UCMS: system_type_UCMS,
+			      				location_UCMS : location_UCMS,
+			      				building_UCMS: building_UCMS,
+								floor_UCMS: floor_UCMS
+			      		}
+			      		callback(null,json);
+			      	}
+			  });
+		  }
+		 ],
+	  function(err,results){
+	    if(err)console.log(err);
+	    var result = {
+	      result_code: result_code,
+	      result_msg: result_msg,
+	      result:results
+	    };
+	    res.send(JSON.stringify(result));
+	});
 });
 
 //임계치에 해당하는 통계 data를 alarm_list table에 insert하는 logic
@@ -2102,7 +2403,7 @@ router.get('/v1/tas-list/:number', function(req, res, next) {
 			  });
 
 		  },
-		  function(callback){ //알람 DATA Query, pgw-detail.js, fallback(2)
+		  function(callback){ //알람 DATA Query, tas-detail.js, fallback(2)
 			  var system_name = [];
 			  var date = [];
 			  var time = [];
@@ -2110,7 +2411,7 @@ router.get('/v1/tas-list/:number', function(req, res, next) {
 			  var type = [];
 			  var code = [];
 			  
-			  mysqlDB.query('select date, time, system_name, sys_sub_name, alarm_type, alarm_code from alarm_list where alarm_type in (\'ALARM\',\'STAT\') and alarm_mask=\'N\' and system_name like \'%TAS%\'; ',
+			  mysqlDB.query('select date, time, system_name, sys_sub_name, alarm_type, alarm_code from alarm_list where alarm_type=\'ALARM\' and alarm_mask=\'N\' and system_name like \'%TAS%\'; ',
 					  function(error, results, fields) {
 					  	if (error) {
 				      		console.log(error);
@@ -2474,7 +2775,7 @@ router.get('/v1/mss-list/:number', function(req, res, next) {
 			  var type = [];
 			  var code = [];
 			  
-			  mysqlDB.query('select date, time, system_name, sys_sub_name, alarm_type, alarm_code from alarm_list where alarm_type in (\'ALARM\',\'STAT\') and alarm_mask=\'N\' and system_name like \'%MSS%\'; ',
+			  mysqlDB.query('select date, time, system_name, sys_sub_name, alarm_type, alarm_code from alarm_list where alarm_type=\'ALARM\' and alarm_mask=\'N\' and system_name like \'%MSS%\'; ',
 					  function(error, results, fields) {
 					  	if (error) {
 				      		console.log(error);

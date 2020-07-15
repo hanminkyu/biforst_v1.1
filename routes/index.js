@@ -116,6 +116,36 @@ router.get('/ucms-rm', function(req, res, next){
 });
 /* -----------------------------------sj 2020.05.28 end----------------------------------- */
 
+/* -----------------------------------th----------------------------------- */
+router.get('/mme-list', function(req, res, next){
+	  res.render('mme-list');
+});
+
+router.get('/mme-list/:system', function(req, res, next){
+	  res.render('mme-detail', { system: req.params.system});
+	  
+});
+
+router.get('/mme-rm', function(req, res, next){
+	  res.render('mme-rm');
+	  
+});
+
+router.get('/sgw-list', function(req, res, next){
+	  res.render('sgw-list');
+});
+
+router.get('/sgw-list/:system', function(req, res, next){
+	  res.render('sgw-detail', { system: req.params.system});
+	  
+});
+
+router.get('/sgw-rm', function(req, res, next){
+	  res.render('sgw-rm');
+	  
+});
+
+
 /**
 router.get('/system-detail/:system', function(req, res, next){
   res.render('system-detail');
