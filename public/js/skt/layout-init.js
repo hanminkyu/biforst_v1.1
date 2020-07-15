@@ -3,7 +3,6 @@
 /** collectionServer dictionary - if value is true, the item is masked */
 var collectionServers = {};
 
-
 /** 2019.05.20 Added converter function for URL encoding compatibility -JJ- */
 function convertTxtToUrlEncoding(txt){
   var temp = txt;
@@ -153,7 +152,7 @@ function ajaxUncollected(url){
 	  .done(function(data){
 	    var json = JSON.parse(data);
 	
-		var count = 0; //미수집 장비 몇개인지 count
+		var uncollected_count = 0; //미수집 장비 몇개인지 count
 	
 	    //fallback(0) PGW 정보
 	    var system_name_PGW = json.result[0].system_name_PGW;
@@ -217,10 +216,10 @@ function ajaxUncollected(url){
 	
 	    $(".skt-smr-modal-tbl").find(".skt-uncollected-txt").remove();
 		$("#data-rcv-info").find("#UncollectedBtn").remove();
-		$("#data-rcv-info").removeClass("alarm-twinkle");
+		$("#data-rcv-info").removeClass("alarm-twinkle2");
 	    
 		system_name_PGW.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_PGWHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_PGW[index]+"</p>"; 
 	        var system_type_PGWHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_PGW[index]+"</p>";
 	        var location_PGWHtml = "<p class='skt-uncollected-txt align-middle'>"+location_PGW[index]+"</p>";
@@ -236,7 +235,7 @@ function ajaxUncollected(url){
 
 
 		system_name_TAS.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_TASHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_TAS[index]+"</p>"; 
 	        var system_type_TASHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_TAS[index]+"</p>";
 	        var location_TASHtml = "<p class='skt-uncollected-txt align-middle'>"+location_TAS[index]+"</p>";
@@ -252,7 +251,7 @@ function ajaxUncollected(url){
 
 	
 		system_name_HSS.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_HSSHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_HSS[index]+"</p>"; 
 	        var system_type_HSSHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_HSS[index]+"</p>";
 	        var location_HSSHtml = "<p class='skt-uncollected-txt align-middle'>"+location_HSS[index]+"</p>";
@@ -268,7 +267,7 @@ function ajaxUncollected(url){
 
 
 		system_name_HLR.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_HLRHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_HLR[index]+"</p>"; 
 	        var system_type_HLRHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_HLR[index]+"</p>";
 	        var location_HLRHtml = "<p class='skt-uncollected-txt align-middle'>"+location_HLR[index]+"</p>";
@@ -284,7 +283,7 @@ function ajaxUncollected(url){
 
 
 		system_name_AUC.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_AUCHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_AUC[index]+"</p>"; 
 	        var system_type_AUCHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_AUC[index]+"</p>";
 	        var location_AUCHtml = "<p class='skt-uncollected-txt align-middle'>"+location_AUC[index]+"</p>";
@@ -301,7 +300,7 @@ function ajaxUncollected(url){
 	
 	    
 	    system_name_MME.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_MMEHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_MME[index]+"</p>"; 
 	        var system_type_MMEHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_MME[index]+"</p>";
 	        var location_MMEHtml = "<p class='skt-uncollected-txt align-middle'>"+location_MME[index]+"</p>";
@@ -318,7 +317,7 @@ function ajaxUncollected(url){
 
 
 		system_name_SGW.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_SGWHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_SGW[index]+"</p>"; 
 	        var system_type_SGWHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_SGW[index]+"</p>";
 	        var location_SGWHtml = "<p class='skt-uncollected-txt align-middle'>"+location_SGW[index]+"</p>";
@@ -335,7 +334,7 @@ function ajaxUncollected(url){
 	
 	    
 	    system_name_UCMS.forEach(function(e,index){
-			count++;
+			uncollected_count++;
 	        var system_name_UCMSHtml = "<p class='skt-uncollected-txt align-middle'>"+system_name_UCMS[index]+"</p>"; 
 	        var system_type_UCMSHtml = "<p class='skt-uncollected-txt align-middle'>"+system_type_UCMS[index]+"</p>";
 	        var location_UCMSHtml = "<p class='skt-uncollected-txt align-middle'>"+location_UCMS[index]+"</p>";
@@ -349,14 +348,11 @@ function ajaxUncollected(url){
 	        $(".skt-modal-floor-container").append(floor_UCMSHtml);
 	      });
 
-	
-		console.log(count);
 		
-		if(count > 0){
-			$('#data-rcv-info').append("<span id='UncollectedBtn'>"+count+"</span>");
-			$('#data-rcv-info').addClass("alarm-twinkle");
+		if(uncollected_count > 0){
+			$('#data-rcv-info').append("<span id='UncollectedBtn'>"+uncollected_count+"</span>");
+			$('#data-rcv-info').addClass("alarm-twinkle2");
 		}
-		
 		
 	  });
 }
@@ -491,7 +487,7 @@ function ajaxUncollected(url){
     if(countCri>0 && $("input[name=temp-mute-cri-chk-box").attr("value")=="on") flag = true;
     if(countCoolerCri>0 && $("input[name=cooler-mute-cri-chk-box").attr("value")=="on") flag = true;
 
-    if(flag) audio.play();
+    //if(flag) audio.play();
     else{
       audio.pause();
       audio.currentTime = 0;

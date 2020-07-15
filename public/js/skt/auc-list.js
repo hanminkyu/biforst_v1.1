@@ -3,6 +3,7 @@ function executeSetInterval(func, delay){
   setInterval(func,delay);
 }
 
+
 var sound_status = 1; //Sound ON
 var audio = "<audio autoplay loop class=\"audio\" src='/alert_sound.mp3'></audio>";
 
@@ -39,6 +40,7 @@ function play_audio(){
 function pause_audio(){
 	$(".aucList-container").find(".audio").remove();
 }
+
 
 
 /** 2020.02.27 Ajax Function Updates System detail status -MK- */
